@@ -11,6 +11,7 @@ def Juego():
 
         vidas=3
         print("Tienes tres vidas")
+
         while vidas != 0:
             pregunta=lista[randint(0,32)]
             print("Dime la capital de: ",pregunta)
@@ -20,6 +21,8 @@ def Juego():
                 puntos+=100
                 print("vidas = ",vidas)
                 print("Puntos = ",puntos)
+
+
             else:
                 print("Incorrecto")
                 puntos-=50
@@ -27,6 +30,7 @@ def Juego():
                 print ("La respuesta Correcta es ",estados[pregunta])
                 print("vidas = ",vidas)
                 print("Puntos = ",puntos)
+
         print("Perdiste")
 
 
