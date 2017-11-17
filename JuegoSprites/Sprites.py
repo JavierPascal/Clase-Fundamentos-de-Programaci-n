@@ -97,6 +97,10 @@ def dibujar():
     timer = 0
     puntos = 0
 
+    #Music
+    pygame.mixer.init()
+    pygame.mixer.load("Musicadefondo.mp3")
+
     while not termina:
         # Procesa los eventos que recibe
         xm, ym = pygame.mouse.get_pos()
