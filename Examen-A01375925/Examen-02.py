@@ -52,10 +52,10 @@ def aprobados(promedio, nombres):#Calcula la cantidad de aprobados y la pone en 
             nombre.append(nombres[i])
             calif.append(promedio[i])
     print("Tabla de Aprobados")
-    print("Nombre" + "\t" + "\t" +  "\t" + "\t" "Promedio")
+    print("Nombre" + 5*"\t" +"Promedio")
     for t in range(len(nombre)):
         if len(nombre[t]) > 1:
-            print(nombre[t] +(25-len(nombre))*" " + str(calif[t]) + "\n")
+            print(nombre[t] +(25-len(nombre[t]))*"-" + str(calif[t]) + "\n")
 
 
 def muy_reprobados(promedio, nombres):#Calcula el menor promedio y lo pone en una tabla
@@ -66,10 +66,10 @@ def muy_reprobados(promedio, nombres):#Calcula el menor promedio y lo pone en un
             nombre.append(nombres[i])
             calif.append(promedio[i])
     print("Alumno(s) con menor promedio")
-    print("Nombre" + "\t" + "\t" + "\t" + "\t" + "\t" "Promedio")
+    print("%-20s %s"%("Nombre","Promedio"))
     for t in range(len(nombre)):
         if len(nombre[t]) < 26:
-            print(nombre[t] +(20-len(nombre))*" " + str(calif[t]) + "\n")
+            print(nombre[t] +(25-len(nombre[t]))*"-" + str(calif[t]) + "\n")
 def ECOA(): #dice mensaje de ecoa
     print("Ya conteste la ECOA")
 def main():
