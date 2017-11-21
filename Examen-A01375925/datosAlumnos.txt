@@ -1,0 +1,93 @@
+1319771;67.7;No aprobó
+1343236;62.3;No aprobó
+1323208;73.7;Aprobó
+1398100;69.7;No aprobó
+1367879;83.0;Aprobó
+1323201;60.0;No aprobó
+1356877;66.3;No aprobó
+1316621;54.3;No aprobó
+1313007;54.3;No aprobó
+1365712;44.7;No aprobó
+1314887;74.7;Aprobó
+1320983;71.3;Aprobó
+1361497;56.3;No aprobó
+1389628;48.3;No aprobó
+1326009;76.0;Aprobó
+1350201;64.7;No aprobó
+1378296;70.0;Aprobó
+1347383;57.0;No aprobó
+1333347;61.7;No aprobó
+1374853;63.7;No aprobó
+1364490;76.7;Aprobó
+1311797;66.0;No aprobó
+1338282;50.7;No aprobó
+1331111;72.7;Aprobó
+1398159;77.7;Aprobó
+1385500;54.0;No aprobó
+1390589;44.7;No aprobó
+1337502;61.0;No aprobó
+1349060;52.7;No aprobó
+1367311;69.7;No aprobó
+1393141;63.7;No aprobó
+1340440;62.3;No aprobó
+1352898;69.7;No aprobó
+1326623;59.3;No aprobó
+1381187;81.7;Aprobó
+1382743;70.0;Aprobó
+1370464;61.7;No aprobó
+1399897;73.3;Aprobó
+1352717;73.7;Aprobó
+1370924;67.0;No aprobó
+1361540;68.3;No aprobó
+1371110;69.0;No aprobó
+1362003;68.7;No aprobó
+1327074;64.0;No aprobó
+1357047;67.7;No aprobó
+1338947;63.3;No aprobó
+1336530;45.3;No aprobó
+1329515;62.7;No aprobó
+1357079;65.3;No aprobó
+1366472;77.7;Aprobó
+1364804;60.3;No aprobó
+1352141;69.7;No aprobó
+1349272;59.7;No aprobó
+1379829;63.0;No aprobó
+1389715;59.3;No aprobó
+1328092;44.7;No aprobó
+1363298;54.0;No aprobó
+1363327;59.0;No aprobó
+1352933;64.0;No aprobó
+1362963;68.7;No aprobó
+1358561;63.0;No aprobó
+1394468;56.7;No aprobó
+1396304;63.7;No aprobó
+1317429;70.7;Aprobó
+1316192;59.3;No aprobó
+1367435;59.0;No aprobó
+1372219;48.0;No aprobó
+1342216;66.0;No aprobó
+1378745;71.7;Aprobó
+1380670;65.7;No aprobó
+1353321;69.0;No aprobó
+1391594;78.3;Aprobó
+1329266;46.3;No aprobó
+1359605;67.3;No aprobó
+1377725;79.7;Aprobó
+1388833;66.3;No aprobó
+1369266;61.3;No aprobó
+1339615;77.3;Aprobó
+1334554;59.7;No aprobó
+1312155;57.3;No aprobó
+1397834;68.0;No aprobó
+1329508;75.7;Aprobó
+1320433;57.3;No aprobó
+1398599;68.3;No aprobó
+1370625;62.7;No aprobó
+1387584;59.0;No aprobó
+1381411;68.7;No aprobó
+1312646;59.7;No aprobó
+1393838;77.3;Aprobó
+1366288;52.7;No aprobó
+1371699;56.7;No aprobó
+1327548;50.3;No aprobó
+1373096;52.7;No aprobó
