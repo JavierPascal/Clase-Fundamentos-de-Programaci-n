@@ -63,7 +63,7 @@ def draw():
 
     #fondo
 
-    image_back= pygame.image.load("images/Back/01.png")
+    image_back= pygame.image.load("images/Back/whole.png")
     x = 0
 
 
@@ -79,8 +79,7 @@ def draw():
 
         ventana.blit(image_back, (width+x,0))
         x -= 5
-        if x <= -width:
-            x=0
+
 
         # Dibujar, aquí haces todos los trazos que requieras
         current_frame = getFrame(Animation_Timer, Spriteslist)
