@@ -5,7 +5,7 @@ import pygame
 from random import randint
 # Dimensiones de la pantalla
 ancho = 800
-alto = 900
+alto = 800
 # Colores
 blanco = (255,255,255)  # R,G,B en el rango [0,255]
 verde_bandera = (0, 122, 0)
@@ -98,8 +98,7 @@ def dibujar():
     puntos = 0
 
     #Music
-    pygame.mixer.init()
-    pygame.mixer.load("Musicadefondo.mp3")
+
 
     while not termina:
         # Procesa los eventos que recibe

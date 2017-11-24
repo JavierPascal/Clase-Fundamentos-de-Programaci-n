@@ -18,6 +18,8 @@ num_coins = 10
 time_in_frames = .1
 total_time= num_images*time_in_frames
 
+def drawMenu(ventana, playButton):
+    ventana.blit(playButton.image, playButton.rect)
 
 def createSpriteslist():
     lista = []
@@ -31,18 +33,7 @@ def createSpriteslist():
         Animation_spr.rect.top =650-137
         lista.append(Animation_spr)
     return lista
-def createSpriteslist_2():
-    lista = []
-    for i in range(num_coins):
-        name = "imagenes/coin-"+ str(i)+".png"
-        image = pygame.image.load(name)
-        Animation_spr= pygame.sprite.Sprite()
-        Animation_spr.image= image
-        Animation_spr.rect = image.get_rect()
-        Animation_spr.rect.left =  width //2 - Animation_spr.rect.width//2 -50
-        Animation_spr.rect.top =tall//2- Animation_spr.rect.height//2 -65
-        lista.append(Animation_spr)
-    return lista
+
 
 
 def getFrame(Animation_Timer, Spriteslist):
@@ -56,7 +47,15 @@ def draw():
     ventana = pygame.display.set_mode((width, tall))    # Crea la ventana de dibujo
     reloj = pygame.time.Clock() # Para limitar los fps
     termina = False # Bandera para saber si termina la ejecución
-
+    state = "menu"
+    # Image Button
+    imgButPlay = pygame.image.load("images/button_jugar.png")
+    # Sprite it
+    playButton = pygame.sprite.Sprite()
+    playButton.image = imgButPlay
+    playButton.rect = imgButPlay.get_rect()
+    playButton.rect.left = width // 2 - playButton.rect.width // 2
+    playButton.rect.top = tall // 2 - playButton.rect.height // 2
     #Animation of Puma
     Spriteslist = createSpriteslist()
     Animation_Timer = 0
@@ -65,25 +64,45 @@ def draw():
 
     image_back= pygame.image.load("images/Back/whole.png")
     x = 0
-
+    #Puntos
+    points=0
 
     while not termina:
         # Procesa los eventos que recibe
+        xm, ym = pygame.mouse.get_pos()
         for evento in pygame.event.get():
             if evento.type == pygame.QUIT:  # El usuario hizo click en el botón de salir
                 termina = True
+            elif evento.type == pygame.MOUSEBUTTONDOWN: #Mouse Clicked
 
-        # Borrar pantalla
-        ventana.fill(white)
-        ventana.blit(image_back, (x,0))
+                if state == "menu":
+                    xb, yb, anchoB, altoB =playButton.rect
+                    if xm>=xb and xm<=xb+anchoB:
+                        if ym>=yb and ym<=yb + altoB:
+                            #Switch Window
+                            state = "jugando"
+                elif state == "jugando":
+                    ventana.fill(white)
+                    ventana.blit(image_back, (x,0))
 
-        ventana.blit(image_back, (width+x,0))
-        x -= 5
+                    font = pygame.font.SysFont("monospace", 18)
+                    text = font.render("Puntos:" + str(round(points, 3)), 1, white)
+                    ventana.blit(text, (10, 10))
+
+                    ventana.blit(image_back, (width+x,0))
+                    x -= 5
+                    if x >= width:
+                        x=0
+
+                    # Dibujar, aquí haces todos los trazos que requieras
+
+        if state == "menu":
+            drawMenu(ventana, playButton)
+        elif state == "jugando":
+            current_frame = getFrame(Animation_Timer, Spriteslist)
+            ventana.blit(current_frame.image, current_frame.rect)
 
 
-        # Dibujar, aquí haces todos los trazos que requieras
-        current_frame = getFrame(Animation_Timer, Spriteslist)
-        ventana.blit(current_frame.image,current_frame.rect)
 
         pygame.display.flip()   # Actualiza trazos
         Animation_Timer += reloj.tick(40)/1000        # 40 fps
