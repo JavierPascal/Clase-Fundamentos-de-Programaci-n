@@ -45,7 +45,7 @@ def getFrame(Animation_Timer, Spriteslist):
 
 
 def draw():
-    keys = pygame.key.get_pressed()
+
     # Ejemplo del uso de pygame
     pygame.init()   # Inicializa pygame
     ventana = pygame.display.set_mode((width, tall))    # Crea la ventana de dibujo
@@ -66,7 +66,7 @@ def draw():
 
     #fondo
 
-    image_back= pygame.image.load("images/Back/whole.png")
+    image_back= pygame.image.load("images/Back/01.png")
     x = 0
     #Puntos
     points=0
@@ -86,13 +86,8 @@ def draw():
                             #Switch Window
                             state = "jugando"
         # Borrar pantalla
-        ventana.fill(white)
-        ventana.blit(image_back, (+x, 0))
+        ventana.fill(black)
 
-        ventana.blit(image_back, (width +x, 0))
-        x -= 9
-        if x <= -12748:
-            x = 0
 
                     # Dibujar, aquí haces todos los trazos que requieras
 
@@ -108,18 +103,35 @@ def draw():
         if state == "menu":
             drawMenu(ventana, playButton)
         elif state == "jugando":
+            ventana.blit(image_back, (+x, 0))
+
+            ventana.blit(image_back, (width + x, 0))
+            x -= 9
+            if x <= -12748:
+                x = 0
 
             current_frame = getFrame(Animation_Timer, Spriteslist)
             ventana.blit(current_frame.image, current_frame.rect)
+            current_frame.rect.top +=9.81//2
+            pygame.draw.rect(ventana, (white),(0, (650-137), 1280, 1))
 
+            keys = pygame.key.get_pressed()
             if keys[pygame.K_SPACE]:
-                ventana.blit(current_frame.image, current_frame.rect +10)
+                current_frame = getFrame(Animation_Timer, Spriteslist)
+                current_frame.rect.top -=10
+                ventana.blit(current_frame.image, current_frame.rect)
+                if current_frame.rect.top ==650-137:
+                    current_frame.rect.top-=9.81//2
+
+
 
 
             pygame.display.flip()   # Actualiza trazos
             Animation_Timer += reloj.tick(40)/1000        # 40 fps
             if Animation_Timer >= total_time:
                 Animation_Timer =0
+        pygame.display.flip()
+        reloj.tick(40)
     pygame.quit()   # termina pygame
 
 
