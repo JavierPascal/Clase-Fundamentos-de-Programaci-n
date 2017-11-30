@@ -6,7 +6,7 @@ from random import randint
 
 # Dimensiones de la pantalla
 ancho = 800
-alto = 800
+alto = 600
 # Colores
 blanco = (255, 255, 255)  # R,G,B en el rango [0,255]
 verde_bandera = (0, 122, 0)
@@ -14,10 +14,10 @@ rojo = (255, 0, 0)
 negro = (0, 0, 0)
 
 
-def drawMenu(ventana, playButton, Logo,):
+def drawMenu(ventana, playButton, Logo, high):
     ventana.blit(playButton.image, playButton.rect)
     ventana.blit(Logo.image, Logo.rect)
-
+    ventana.blit(high.image, high.rect)
 
 
 
@@ -28,7 +28,8 @@ def drawGame(ventana, enemiesList, bulletList):
         ventana.blit(bullet.image, bullet.rect)
 
 
-def refreshBullets(bulletlist, enemiesList):
+def refreshBullets(bulletlist, enemiesList,puntos):
+
     for bullet in bulletlist:  # DO NOT MODIFY CONNECTION
         bullet.rect.top -= 15
         if bullet.rect.top < -15:
@@ -40,14 +41,21 @@ def refreshBullets(bulletlist, enemiesList):
             if bullet.rect.colliderect(enemy):
                 enemiesList.remove(enemy)
                 delBullet = True
+                puntos+=50
                 break
         if delBullet == True:
             bulletlist.remove(bullet)
+    return puntos
+def refreshEnemies(enemiesList):
+    for enemy in enemiesList:  # DO NOT MODIFY CONNECTION
+        enemy.rect.top += 2
+
+
 
 
 def spawnEnemies(enemiesList, imgEnemy):
     for x in range(5):
-        for y in range(4):
+        for y in range(2):
             # X,Y coordenates
             cx = 50 + x * 150
             cy = 50 + y * 150
@@ -57,19 +65,37 @@ def spawnEnemies(enemiesList, imgEnemy):
             enemy.rect.left = cx - enemy.rect.width // 2
             enemy.rect.top = cy - enemy.rect.height // 2
             enemiesList.append(enemy)
-    for enemy in enemiesList:
-        enemy.rect.top -= 15
 
 
-def randomEnemies(enemiesList, imgEnemy):
+
+
+def randomEnemies(enemiesList, imgEnemy, imgEnemy_69,img_Comet):
     enemy = pygame.sprite.Sprite()
     enemy.image = imgEnemy
     enemy.rect = imgEnemy.get_rect()
     cx = randint(10, ancho - enemy.rect.width)
-    cy = randint(10, alto - enemy.rect.top)
+    cy = -enemy.rect.height
     enemy.rect.left = cx
-    enemy.rect.top = cy
+    enemy.rect.top =cy
+    fail = pygame.sprite.Sprite()
+    fail.image = imgEnemy_69
+    fail.rect = imgEnemy_69.get_rect()
+    fail.rect.left = randint(10, ancho - fail.rect.width)
+    fail.rect.top = -fail.rect.height
+    comet = pygame.sprite.Sprite()
+    comet.image = img_Comet
+    comet.rect = img_Comet.get_rect()
+    comet.rect.left = randint(10, ancho - comet.rect.width)
+    comet.rect.top = -comet.rect.height
+
+
     enemiesList.append(enemy)
+    enemiesList.append((fail))
+    enemiesList.append((comet))
+
+
+def drawHighscores(ventana, Logo):
+    ventana.blit(Logo.image, Logo.rect)
 
 
 def dibujar():
@@ -96,6 +122,16 @@ def dibujar():
     Logo.rect = imgLogo.get_rect()
     Logo.rect.left = ancho // 2 - Logo.rect.width // 2
     Logo.rect.top = playButton.rect.top - 200
+    #Loadd Images
+    imgButHigh = pygame.image.load("Images/button_highscores.png")
+    # Sprite
+    highButton = pygame.sprite.Sprite()
+    highButton.image = imgButHigh
+    highButton.rect = imgButHigh.get_rect()
+    highButton.rect.left = (ancho // 2 - highButton.rect.width // 2)
+    highButton.rect.top = (alto // 2 - highButton.rect.height // 2)+150
+
+
     #Fondo de Menu
     imgSpace = pygame.image.load("images/Back/Space.png")
 
@@ -104,9 +140,12 @@ def dibujar():
     #Imagen Fondo
     image_back = pygame.image.load("images/Back/FondoSpace.png")
     y = 0
-    # Enemies
+    #
     enemiesList = []
     imgEnemy = pygame.image.load("Images/DA.png")
+    imgEnemy_69=pygame.image.load("Images/69.png")
+    img_Comet = pygame.image.load("Images/Comet.png")
+
     spawnEnemies(enemiesList, imgEnemy)
 
     # Balas
@@ -129,10 +168,14 @@ def dibujar():
 
                 if state == "menu":
                     xb, yb, anchoB, altoB = playButton.rect
+                    xh, yh, anchoH, altoH = highButton.rect
                     if xm >= xb and xm <= xb + anchoB:
                         if ym >= yb and ym <= yb + altoB:
-                            # Switch Window
                             state = "jugando"
+                            # Switch Window
+                    elif xm >= xh and xm <= xh + anchoH:
+                        if ym >= yh and ym <= yh + altoH:
+                            state = "highscore"
                 elif state == "jugando":
                     enemy = pygame.sprite.Sprite()
                     enemy.image = imgEnemy
@@ -152,22 +195,22 @@ def dibujar():
         # Borrar pantalla
 
         ventana.fill(negro)
-        puntos += .2
-        font = pygame.font.SysFont("monospace", 18)
-        text = font.render("Puntos:" + str(round(puntos, 3)), 1, blanco)
-        ventana.blit(text, (10, 10))
+
 
         # Enemies every 2 sec
 
         timer += 1 / 40
         if timer >= 2:
             timer = 0
-            randomEnemies(enemiesList, imgEnemy)
+            randomEnemies(enemiesList, imgEnemy, imgEnemy_69, img_Comet)
 
         # Dibujar, aquí haces todos los trazos que requieras
         if state == "menu":
             ventana.blit(imgSpace, (0, 0))
-            drawMenu(ventana, playButton,Logo)
+            drawMenu(ventana, playButton,Logo,highButton)
+        elif state == "highscore":
+            ventana.fill(negro)
+            drawHighscores(ventana, Logo)
 
         elif state == "jugando":
             ventana.blit(image_back, (0, y))
@@ -176,8 +219,13 @@ def dibujar():
             y -= 9
             if y <= -10000:
                 y = 0
-            refreshBullets(bulletList, enemiesList)
+            refreshBullets(bulletList, enemiesList,0)
+            refreshEnemies(enemiesList)
             drawGame(ventana, enemiesList, bulletList)
+            puntos = refreshBullets(bulletList, enemiesList,0)
+            font = pygame.font.SysFont("monospace", 18)
+            text = font.render("Puntos:" + str(round(puntos, 3)), 1, blanco)
+            ventana.blit(text, (10, 10))
 
         pygame.display.flip()  # Actualiza trazos
         reloj.tick(40)  # 40 fps
