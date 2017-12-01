@@ -14,6 +14,7 @@ rojo = (255, 0, 0)
 negro = (0, 0, 0)
 
 
+
 def drawMenu(ventana, playButton, Logo, high):
     ventana.blit(playButton.image, playButton.rect)
     ventana.blit(Logo.image, Logo.rect)
@@ -26,7 +27,6 @@ def drawGame(ventana, enemiesList, bulletList):
         ventana.blit(enemy.image, enemy.rect)
     for bullet in bulletList:
         ventana.blit(bullet.image, bullet.rect)
-
 
 def refreshBullets(bulletlist, enemiesList,puntos):
 
@@ -53,7 +53,7 @@ def refreshEnemies(enemiesList):
 
 
 
-def spawnEnemies(enemiesList, imgEnemy):
+"""def spawnEnemies(enemiesList, imgEnemy):
     for x in range(5):
         for y in range(2):
             # X,Y coordenates
@@ -64,7 +64,21 @@ def spawnEnemies(enemiesList, imgEnemy):
             enemy.rect = imgEnemy.get_rect()
             enemy.rect.left = cx - enemy.rect.width // 2
             enemy.rect.top = cy - enemy.rect.height // 2
-            enemiesList.append(enemy)
+            enemiesList.append(enemy)"""
+
+
+def DibujarBogo(ventana):
+    xm, ym = pygame.mouse.get_pos()
+    imgBogo = pygame.image.load("Images/Spaceship.png")
+    bogo = pygame.sprite.Sprite()
+    bogo.image = imgBogo
+    bogo.rect = imgBogo.get_rect()
+    bogo.rect.left = xm - 55
+    bogo.rect.top = alto - bogo.rect.height
+
+    ventana.blit(bogo.image,bogo.rect)
+    return bogo
+
 
 
 
@@ -95,8 +109,21 @@ def randomEnemies(enemiesList, imgEnemy, imgEnemy_69,img_Comet):
 
 
 def drawHighscores(ventana, Logo):
+    imgSpace = pygame.image.load("images/Back/Space.png")
+    ventana.blit(imgSpace,(0,0))
     ventana.blit(Logo.image, Logo.rect)
+    open("highscore.txt", "w", encoding="UTF-8")
 
+
+def Livesubstract(ventana, bogo, enemiesList, lives):
+
+
+    for enemy in enemiesList:
+        if pygame.sprite.collide_rect(bogo, enemy):
+            lives -= 1
+    font = pygame.font.SysFont("monospace", 18)
+    text = font.render("Vidas:" + str(round(lives, 3)), 1, blanco)
+    ventana.blit(text, (10, 10))
 
 def dibujar():
     # Ejemplo del uso de pygame
@@ -105,6 +132,7 @@ def dibujar():
     reloj = pygame.time.Clock()  # Para limitar los fps
     termina = False  # Bandera para saber si termina la ejecución
     state = "menu"  # playing, end
+    lives=3
 
     # Load images
     imgButPlay = pygame.image.load("Images/button_jugar.png")
@@ -130,6 +158,10 @@ def dibujar():
     highButton.rect = imgButHigh.get_rect()
     highButton.rect.left = (ancho // 2 - highButton.rect.width // 2)
     highButton.rect.top = (alto // 2 - highButton.rect.height // 2)+150
+    #Sprite
+
+
+
 
 
     #Fondo de Menu
@@ -146,20 +178,21 @@ def dibujar():
     imgEnemy_69=pygame.image.load("Images/69.png")
     img_Comet = pygame.image.load("Images/Comet.png")
 
-    spawnEnemies(enemiesList, imgEnemy)
+    #spawnEnemies(enemiesList, imgEnemy)
 
     # Balas
     bulletList = []
-    imgBullet = pygame.image.load("Images/Bogo/Bogo-0.png")
+    imgBullet = pygame.image.load("Images/rayito.png")
 
     timer = 0
-    puntos = 0
+
 
     # Music
 
 
     while not termina:
         # Procesa los eventos que recibe
+
         xm, ym = pygame.mouse.get_pos()
         for evento in pygame.event.get():
             if evento.type == pygame.QUIT:  # El usuario hizo click en el botón de salir
@@ -173,7 +206,7 @@ def dibujar():
                         if ym >= yb and ym <= yb + altoB:
                             state = "jugando"
                             # Switch Window
-                    elif xm >= xh and xm <= xh + anchoH:
+                    if xm >= xh and xm <= xh + anchoH:
                         if ym >= yh and ym <= yh + altoH:
                             state = "highscore"
                 elif state == "jugando":
@@ -183,14 +216,17 @@ def dibujar():
                     enemy.rect.left = xm - enemy.rect.width // 2
                     enemy.rect.top = ym - enemy.rect.height // 2
                     enemiesList.append(enemy)
+
+
             elif evento.type == pygame.KEYDOWN:
                 if evento.key == pygame.K_SPACE:
                     bullet = pygame.sprite.Sprite()
                     bullet.image = imgBullet
                     bullet.rect = imgBullet.get_rect()
                     bullet.rect.left = xm
-                    bullet.rect.top = alto + bullet.rect.height
+                    bullet.rect.top = alto
                     bulletList.append(bullet)
+
 
         # Borrar pantalla
 
@@ -209,8 +245,9 @@ def dibujar():
             ventana.blit(imgSpace, (0, 0))
             drawMenu(ventana, playButton,Logo,highButton)
         elif state == "highscore":
-            ventana.fill(negro)
+
             drawHighscores(ventana, Logo)
+
 
         elif state == "jugando":
             ventana.blit(image_back, (0, y))
@@ -219,13 +256,13 @@ def dibujar():
             y -= 9
             if y <= -10000:
                 y = 0
+
             refreshBullets(bulletList, enemiesList,0)
             refreshEnemies(enemiesList)
             drawGame(ventana, enemiesList, bulletList)
-            puntos = refreshBullets(bulletList, enemiesList,0)
-            font = pygame.font.SysFont("monospace", 18)
-            text = font.render("Puntos:" + str(round(puntos, 3)), 1, blanco)
-            ventana.blit(text, (10, 10))
+            bogo=DibujarBogo(ventana)
+            Livesubstract(ventana, bogo, enemiesList, lives)
+
 
         pygame.display.flip()  # Actualiza trazos
         reloj.tick(40)  # 40 fps

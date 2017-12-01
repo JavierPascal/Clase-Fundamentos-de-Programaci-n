@@ -85,6 +85,7 @@ def dibujar():
     playButton.rect.left = ancho//2 - playButton.rect.width//2
     playButton.rect.top = alto//2 - playButton.rect.height//2
 
+
     #Enemies
     enemiesList=[]
     imgEnemy = pygame.image.load("ALien.png")
